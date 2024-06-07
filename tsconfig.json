@@ -22,9 +22,6 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./app/*"
-      ],
       "@components/*": [
         "./app/_components/*"
       ],
@@ -36,7 +33,10 @@
       ],
       "@public/*": [
         "./public/*"
-      ]
+      ],
+      "@/*": [
+        "./app/*"
+      ],
     }
   },
   "include": [

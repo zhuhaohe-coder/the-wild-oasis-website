@@ -1,5 +1,5 @@
 export interface Cabin {
-  id: string;
+  id: number;
   name: string;
   maxCapacity: number;
   regularPrice: number;
@@ -8,8 +8,8 @@ export interface Cabin {
 }
 
 export interface Booking {
-  id: string;
-  guestId: string;
+  id: number;
+  guestId: number;
   startDate: string;
   endDate: string;
   numNights: number;
@@ -18,4 +18,11 @@ export interface Booking {
   status: string;
   created_at: string;
   cabins: Cabin;
+}
+
+export interface Guest {
+  id: number;
+  fullName: string;
+  email: string;
+  created_at: string;
 }

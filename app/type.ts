@@ -27,3 +27,8 @@ export interface Guest {
   email: string;
   created_at: string;
 }
+
+export interface ErrorProps {
+  error: Error;
+  reset: () => void;
+}

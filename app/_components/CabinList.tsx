@@ -1,8 +1,11 @@
 import CabinCard from "@components/CabinCard";
 import { Cabin } from "@/type";
 import { getCabins } from "@lib/data-service";
+// import { unstable_noStore as noStore } from "next/cache";
 
 async function CabinList() {
+  // noStore(); // 禁用缓存
+
   const cabins: Cabin[] = await getCabins();
 
   if (!cabins) return null;

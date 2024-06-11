@@ -1,4 +1,5 @@
 import CabinList from "@components/CabinList";
+import Filter from "@components/Filter";
 import Spinner from "@components/Spinner";
 import { Suspense } from "react";
 
@@ -8,7 +9,9 @@ export const metadata = {
 
 // export const revalidate = 3600; // 每小时更新一次
 
-export default function Page() {
+export default function Page({ searchParams }: any) {
+  const filter = searchParams?.capacity ?? "all";
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -23,8 +26,12 @@ export default function Page() {
         Welcome to paradise.
       </p>
 
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+      {/* 强制显示 fallback UI */}
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );

@@ -37,3 +37,11 @@
   --rdp-background-color: theme("colors.accent.600") !important;
   margin: 0 !important;
 }
+
+select::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.rdp-dropdown > option {
+  background-color: theme("colors.accent.600");
+}

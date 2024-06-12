@@ -32,3 +32,10 @@ export interface ErrorProps {
   error: Error;
   reset: () => void;
 }
+
+export interface Settings {
+  minBookingLength: number;
+  maxBookingLength: number;
+  maxGuestsPerBooking: number;
+  breakfastPrice: number;
+}

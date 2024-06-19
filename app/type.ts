@@ -11,16 +11,16 @@ export interface Cabin {
 }
 
 export interface Booking {
-  id: number;
+  id: any;
   guestId: number;
   startDate: string;
   endDate: string;
   numNights: number;
   totalPrice: number;
   numGuests: number;
-  status: string;
+  status?: string;
   created_at: string;
-  cabins: Cabin;
+  cabins: { name: any; image: any };
 }
 
 export interface Guest {
@@ -45,4 +45,4 @@ export interface Settings {
   breakfastPrice: number;
 }
 
-export type UserWithGuestId = User & { guestId: string };
+export type UserWithGuestId = User & { guestId: any };

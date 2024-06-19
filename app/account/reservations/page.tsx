@@ -1,14 +1,18 @@
-import { Booking } from "@/type";
+import { Booking, UserWithGuestId } from "@/type";
 import ReservationCard from "@components/ReservationCard";
+import { auth } from "@lib/auth";
+import { getBookings } from "@lib/data-service";
 import Link from "next/link";
 
 export const metadata = {
   title: "Reservations",
 };
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
-  const bookings: Booking[] = [];
+  const authInfo = await auth();
+  const guest = authInfo?.user as UserWithGuestId;
+  const bookings = await getBookings(guest.guestId);
 
   return (
     <div>
@@ -26,7 +30,10 @@ export default function Page() {
       ) : (
         <ul className="space-y-6">
           {bookings.map((booking) => (
-            <ReservationCard booking={booking} key={booking.id} />
+            <ReservationCard
+              booking={booking as unknown as Booking}
+              key={booking.id}
+            />
           ))}
         </ul>
       )}

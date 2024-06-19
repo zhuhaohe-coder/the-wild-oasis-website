@@ -2,6 +2,8 @@ import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "@components/DeleteReservation";
 import { Booking } from "@/type";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ReservationCardProps {
   booking: Booking;
@@ -29,7 +31,8 @@ function ReservationCard({ booking }: ReservationCardProps) {
   return (
     <div className="flex border border-primary-800">
       <div className="relative h-32 aspect-square">
-        <img
+        <Image
+          fill
           src={image}
           alt={`Cabin ${name}`}
           className="object-cover border-r border-primary-800"
@@ -71,17 +74,18 @@ function ReservationCard({ booking }: ReservationCardProps) {
           </p>
         </div>
       </div>
-
-      <div className="flex flex-col border-l border-primary-800 w-[100px]">
-        <a
-          href={`/account/reservations/edit/${id}`}
-          className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
-        >
-          <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
-          <span className="mt-1">Edit</span>
-        </a>
-        <DeleteReservation bookingId={id} />
-      </div>
+      {!isPast(startDate) && (
+        <div className="flex flex-col border-l border-primary-800 w-[100px]">
+          <Link
+            href={`/account/reservations/edit/${id}`}
+            className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
+          >
+            <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
+            <span className="mt-1">Edit</span>
+          </Link>
+          <DeleteReservation bookingId={id} />
+        </div>
+      )}
     </div>
   );
 }

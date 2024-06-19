@@ -1,14 +1,20 @@
+import { Guest } from "@/type";
 import SelectCountry from "@components/SelectCountry";
 import UpdateProfileForm from "@components/UpdateProfileForm";
+import { auth } from "@lib/auth";
+import { getGuest } from "@lib/data-service";
+import { User } from "next-auth";
 
 export const metadata = {
   title: "Update Profile",
 };
 
-export default function Page() {
-  // CHANGE
+export default async function Page() {
+  const authInfo = await auth();
+  const { email } = authInfo?.user as User;
+  const guest: Guest = await getGuest(email as string);
 
-  const nationality = "portugal";
+  const nationality = `${guest.nationality}%${guest.countryFlag}`;
 
   return (
     <div>
@@ -20,7 +26,7 @@ export default function Page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <UpdateProfileForm>
+      <UpdateProfileForm guest={guest}>
         <SelectCountry
           name="nationality"
           id="nationality"

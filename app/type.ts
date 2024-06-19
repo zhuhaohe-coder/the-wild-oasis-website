@@ -1,3 +1,5 @@
+import { User } from "next-auth";
+
 export interface Cabin {
   id: number;
   name: string;
@@ -26,6 +28,9 @@ export interface Guest {
   fullName: string;
   email: string;
   created_at: string;
+  nationalID: string | null;
+  nationality: string | null;
+  countryFlag: string | null;
 }
 
 export interface ErrorProps {
@@ -39,3 +44,5 @@ export interface Settings {
   maxGuestsPerBooking: number;
   breakfastPrice: number;
 }
+
+export type UserWithGuestId = User & { guestId: string };

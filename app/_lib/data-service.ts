@@ -184,7 +184,7 @@ export async function createBooking(newBooking: Booking) {
 
   return data;
 }
-
+/*
 /////////////
 // UPDATE
 
@@ -234,3 +234,4 @@ export async function deleteBooking(id: number) {
   }
   return data;
 }
+*/

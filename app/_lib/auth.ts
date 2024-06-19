@@ -10,10 +10,10 @@ const authConfig = {
     },
     async signIn({ user, account, profile }: any) {
       try {
-        const { email, fullName } = user;
+        const { email, name } = user;
         const existingGuest = await getGuest(user.email);
         if (!existingGuest) {
-          await createGuest({ email, fullName });
+          await createGuest({ email, fullName: name });
         }
 
         return true;

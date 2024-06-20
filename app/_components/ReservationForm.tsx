@@ -1,15 +1,33 @@
 "use client";
 
-import { Cabin } from "@/type";
-import type { User } from "next-auth";
+import { Cabin, UserWithGuestId } from "@/type";
+import { createReservation } from "@lib/actions";
+import { useStore } from "@lib/store";
+import { differenceInDays } from "date-fns";
+import SubmitButton from "./SubmitButton";
 
 interface ReservationFormProps {
   cabin: Cabin;
-  user: User;
+  user: UserWithGuestId;
 }
 
 function ReservationForm({ cabin, user }: ReservationFormProps) {
-  const { maxCapacity } = cabin;
+  const { range, resetRange } = useStore();
+  const { maxCapacity, regularPrice, discount, id: cabinId } = cabin;
+  const { from: startDate, to: endDate } = range;
+  const numNights = differenceInDays(endDate as Date, startDate as Date);
+  const cabinPrice = (regularPrice - discount) * numNights;
+
+  const bookingData = {
+    startDate,
+    endDate,
+    numNights,
+    cabinPrice,
+    cabinId,
+  };
+  console.log(bookingData);
+
+  const createReservationWithData = createReservation.bind(null, bookingData);
 
   return (
     <div className="scale-[1.01]">
@@ -28,7 +46,13 @@ function ReservationForm({ cabin, user }: ReservationFormProps) {
         </div>
       </div>
 
-      <form className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
+      <form
+        action={async (formData) => {
+          await createReservationWithData(formData);
+          resetRange();
+        }}
+        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
+      >
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
@@ -63,9 +87,7 @@ function ReservationForm({ cabin, user }: ReservationFormProps) {
         <div className="flex justify-end items-center gap-6">
           <p className="text-primary-300 text-base">Start by selecting dates</p>
 
-          <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-            Reserve now
-          </button>
+          <SubmitButton pendingLabel="Reserving...">Reserve now</SubmitButton>
         </div>
       </form>
     </div>

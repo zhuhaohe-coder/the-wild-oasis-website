@@ -1,4 +1,4 @@
-import { Cabin } from "@/type";
+import { Cabin, UserWithGuestId } from "@/type";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "@lib/data-service";
@@ -23,7 +23,10 @@ async function Reservation({ cabin }: ReservationProps) {
         cabin={cabin}
       />
       {authInfo?.user ? (
-        <ReservationForm cabin={cabin} user={authInfo.user} />
+        <ReservationForm
+          cabin={cabin}
+          user={authInfo.user as UserWithGuestId}
+        />
       ) : (
         <LoginMessage />
       )}

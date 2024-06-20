@@ -10,7 +10,9 @@ type Store = {
 export const useStore = create<Store>((set) => ({
   range: { from: undefined, to: undefined },
   setRange(range) {
-    set({ range });
+    if (range?.from || range?.to) {
+      set({ range });
+    }
   },
   resetRange() {
     set({ range: { from: undefined, to: undefined } });

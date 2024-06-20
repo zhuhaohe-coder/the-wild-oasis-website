@@ -1,5 +1,6 @@
 import { Booking, UserWithGuestId } from "@/type";
 import ReservationCard from "@components/ReservationCard";
+import ReservationList from "@components/ReservationList";
 import { auth } from "@lib/auth";
 import { getBookings } from "@lib/data-service";
 import Link from "next/link";
@@ -28,14 +29,7 @@ export default async function Page() {
           </Link>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookings.map((booking) => (
-            <ReservationCard
-              booking={booking as unknown as Booking}
-              key={booking.id}
-            />
-          ))}
-        </ul>
+        <ReservationList bookings={bookings} />
       )}
     </div>
   );

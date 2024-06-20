@@ -6,9 +6,10 @@ import SpinnerMini from "./SpinnerMini";
 
 interface DeleteReservationProps {
   bookingId: any;
+  onDelete: (bookingId: string) => void;
 }
 
-function DeleteReservation({ bookingId }: DeleteReservationProps) {
+function DeleteReservation({ bookingId, onDelete }: DeleteReservationProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
@@ -18,7 +19,10 @@ function DeleteReservation({ bookingId }: DeleteReservationProps) {
 
   return (
     <button
-      onClick={handleDelete}
+      onClick={() => {
+        if (confirm("Are you sure you want to delete this reservation?"))
+          onDelete(bookingId);
+      }}
       disabled={isPending}
       className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
     >

@@ -37,6 +37,9 @@ export async function updateProfile(formData: FormData) {
 }
 
 export async function deleteReservation(bookingId: any) {
+  // await new Promise((res) => setTimeout(res, 2000));
+  // throw new Error("Not implemented");
+
   const authInfo = await auth();
   if (!authInfo) throw new Error("You must be logged in");
 

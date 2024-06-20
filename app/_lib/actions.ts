@@ -120,4 +120,5 @@ export async function createReservation(bookingData: any, formData: FormData) {
   }
 
   revalidatePath(`/cabins/${bookingData.cabinId}`);
+  redirect("/cabins/thankyou");
 }
